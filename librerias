@@ -1,0 +1,4 @@
+Dependencias que se deben instalar:
+pip install pygame
+pip install opencv-python
+pip install jurigged
