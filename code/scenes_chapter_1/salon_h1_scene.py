@@ -53,6 +53,8 @@ class SalonH1Scene(Scene):
             self.cellphone_event_timer -= dt
             if self.cellphone_event_timer <= 0:
                 self.cellphone_event_active = False
+                # Al finalizar, desbloqueamos la nota globalmente
+                globales_chapter_1.NOTA_UNLOCKED = True
             return None  # Durante el evento celular, se congela la actualización normal
 
         # Actualización normal de la escena

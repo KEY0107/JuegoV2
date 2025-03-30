@@ -34,12 +34,15 @@ class JardinerasNocheScene(Scene):
         # --- Evento de Zoom ---
         # Definimos el rectángulo que dispara el zoom (solo se activa una vez)
         zoom_trigger_rect = pygame.Rect(548, 460, 17, 515)
-        if not self.zoom_event_triggered and self.player.rect.colliderect(
-            zoom_trigger_rect
+        if (
+            not self.zoom_event_triggered
+            and not globales_chapter_1.FANTASMA_VENTANA
+            and self.player.rect.colliderect(zoom_trigger_rect)
         ):
             self.zoom_event_triggered = True
             self.zoom_event_active = True
             self.zoom_event_timer = 3000  # El evento durará 3 segundos
+            globales_chapter_1.FANTASMA_VENTANA = True
 
         if self.zoom_event_active:
             self.zoom_event_timer -= dt

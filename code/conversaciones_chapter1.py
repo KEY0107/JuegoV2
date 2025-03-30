@@ -36,3 +36,41 @@ CONVERSACION_EMILIAN_OPCION2 = [
 ]
 
 CONVERSACION_EMILIAN_SIMPLE = [("Emiliano", "Se nos hace tarde")]
+
+CONVERSACION_TUTORA_MARIAN = [
+    (
+        "Marian",
+        "Buenos días, Alex. Me encuentro un poco ocupada pero que sepas que tu beca ya está en trámite.",
+    ),
+    ("Alex", "Muchas gracias, Maestra. Nos vemos luego."),
+]
+
+CONVERSACION_TUTORA_MARIAN_SIMPLE = [
+    ("Alex", "Ya no tengo nada pendiente con ella"),
+]
+
+CONVERSACION_GAEL_OPCION1 = [
+    (
+        "Alex",
+        "Hoy me pasaron cosas raras, creo haber visto un fantasma y encontré una nota en el salón donde creo estaba el fantasma.",
+    ),
+    ("Gael", "A ver la notaa."),
+    (
+        "Alex",
+        "... ya no la encuentro (extrañado). Pero recuerdo que mencionaba a una Lucía.",
+    ),
+    (
+        "Gael",
+        "Lucía? (distante). Qué extraño, pero ando cansado, así que hablamos después.",
+    ),
+]
+
+CONVERSACION_GAEL_OPCION2 = [
+    ("Alex", "¿Cómo te fue?"),
+    (
+        "Gael",
+        "Muy cansado, tengo muchos pendientes, así que iré a mi cuarto a trabajar.",
+    ),
+]
+
+CONVERSACION_GAEL_SIMPLE = [("Alex", "Ya no tengo nada pendiente con él")]

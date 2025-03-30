@@ -2,6 +2,9 @@ import pygame
 from map import Map
 from collision_data import get_collisions
 from scenes_chapter_1.scene import Scene
+from item import Item
+from utils import draw_dialogue, draw_prompt
+import globales_chapter_1
 
 
 class SalonI2(Scene):
@@ -14,19 +17,83 @@ class SalonI2(Scene):
         self.DEFAULT_ZOOM = 2
         self.current_map = "salon_i2"
 
+        # --- Nota en el salón ---
+        # La nota solo aparecerá si aún no fue tomada (global)
+        if not globales_chapter_1.NOTA_SALON_TAKEN:
+            try:
+                self.note_img = pygame.image.load(
+                    "../assets/items/nota2.png"
+                ).convert_alpha()
+                self.note_img = pygame.transform.scale(self.note_img, (20, 20))
+            except Exception as e:
+                print("Error loading nota2.png:", e)
+                self.note_img = None
+            # Posición de la nota en el salón (ajusta según convenga)
+            if self.note_img:
+                self.note_rect = self.note_img.get_rect(topleft=(400, 300))
+            else:
+                self.note_rect = pygame.Rect(400, 300, 20, 20)
+        else:
+            self.note_img = None
+
+        self.note_triggered = False
+        self.note_dialogue_active = False
+        self.note_dialogue_shown = False
+        self.dialogue_lines = []
+        self.dialogue_line_index = 0
+
     def handle_events(self, events):
-        pass
+        # Procesar el avance del diálogo de la nota
+        if self.note_dialogue_active:
+            for event in events:
+                if event.type == pygame.KEYDOWN and event.key == pygame.K_e:
+                    self.dialogue_line_index += 1
+                    if self.dialogue_line_index >= len(self.dialogue_lines):
+                        self.note_dialogue_active = False
+                        self.note_dialogue_shown = True
+                        self.dialogue_lines = []
+                        self.dialogue_line_index = 0
+                        # Una vez finalizada la conversación de la nota, marcarla como tomada
+                        globales_chapter_1.NOTA_SALON_TAKEN = True
+                        # Además, se activa la visibilidad y conversación con Gael
+                        globales_chapter_1.GAEL_VISIBLE = True
+                        globales_chapter_1.GAEL_CONVERSATION_UNLOCKED = True
 
     def update(self, dt):
         self.player.update(dt, self.obstacles)
         self.player.clamp_within_map(self.map.fondo_rect)
-        # transicion para regresar a pasillo
+
+        # Transición: regresar a interior_edificio_i2
         door_interior_to_edificio_i2 = pygame.Rect(514, 23, 49, 5)
         if self.player.rect.colliderect(door_interior_to_edificio_i2):
             self.player.rect.center = (955, 318)
             return "interior_edificio_i2"
 
+        # Activar la interacción con la nota (solo si aún no se ha tomado)
+        if (
+            not self.note_triggered
+            and self.note_img
+            and self.player.rect.colliderect(self.note_rect)
+        ):
+            self.note_triggered = True
+            self.note_dialogue_active = True
+            self.dialogue_line_index = 0
+            # Se muestran primero los mensajes de la nota y luego el de Alex
+            self.dialogue_lines = [
+                (
+                    "Nota",
+                    "Lucia, todo bien? Sabes que puedes contarme aun cuando no todo esté bien",
+                ),
+                ("Alex", "Debo ir a casa, espero encontrar a Gael despierto"),
+            ]
+
         return None
+
+    def get_hud_visibility(self):
+        # Ocultar el HUD mientras se muestra el diálogo de la nota o de Alex
+        if self.note_dialogue_active:
+            return False
+        return True
 
     def render(self):
         VIRTUAL_WIDTH, VIRTUAL_HEIGHT = 800, 600
@@ -47,6 +114,7 @@ class SalonI2(Scene):
                 0, min(camera_offset_y, self.map.fondo_rect.height - view_height)
             )
         camera_offset = (camera_offset_x, camera_offset_y)
+
         world_surface = pygame.Surface((int(view_width), int(view_height)))
         world_surface.fill((0, 0, 0))
         self.map.draw_fondo(world_surface, camera_offset)
@@ -56,8 +124,24 @@ class SalonI2(Scene):
                 (sprite.rect.x - camera_offset[0], sprite.rect.y - camera_offset[1]),
             )
         self.map.draw_primer_plano(world_surface, camera_offset)
+
+        # Dibujar la nota solo si aún no ha sido tomada (global)
+        if self.note_img and not globales_chapter_1.NOTA_SALON_TAKEN:
+            world_surface.blit(
+                self.note_img,
+                (
+                    self.note_rect.x - camera_offset[0],
+                    self.note_rect.y - camera_offset[1],
+                ),
+            )
+
         current_width, current_height = self.screen.get_size()
         scaled_surface = pygame.transform.scale(
             world_surface, (current_width, current_height)
         )
         self.screen.blit(scaled_surface, (0, 0))
+
+        # Mostrar diálogo de la nota si está activo
+        if self.note_dialogue_active:
+            speaker, text = self.dialogue_lines[self.dialogue_line_index]
+            draw_dialogue(self.screen, speaker, text)
