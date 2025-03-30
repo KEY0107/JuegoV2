@@ -82,6 +82,12 @@ class JardinerasNocheScene(Scene):
 
         return None
 
+    def get_hud_visibility(self):
+        # Si se está mostrando el zoom o hay algún diálogo, se oculta el inventario
+        if self.zoom_event_active or self.dialogue:
+            return False
+        return True
+
     def render(self):
         if self.zoom_event_active:
             # Durante el evento de zoom, mostramos la sección definida y el texto

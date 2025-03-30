@@ -22,6 +22,9 @@ class SalaScene(Scene):
     def handle_events(self, events):
         pass
 
+    def get_hud_visibility(self):
+        return self.closed_door_text == ""
+
     def update(self, dt):
         self.player.update(dt, self.obstacles)
         self.player.clamp_within_map(self.map.fondo_rect)

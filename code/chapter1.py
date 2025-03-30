@@ -36,6 +36,9 @@ def run_chapter1(screen):
             if event.type == pygame.QUIT:
                 running = False
 
+        # Actualiza la navegación del inventario en el HUD
+        hud.handle_events(events)
+
         current_scene.handle_events(events)
         next_scene = current_scene.update(dt)
         if next_scene is not None:
@@ -119,6 +122,7 @@ def run_chapter1(screen):
                 hud.player = current_scene.player
 
         current_scene.render()
+        hud.show_inventory = current_scene.get_hud_visibility()
         hud.render(screen)
         pygame.display.flip()
 

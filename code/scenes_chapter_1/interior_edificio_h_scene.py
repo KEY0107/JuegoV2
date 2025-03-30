@@ -130,6 +130,13 @@ class InteriorEdificioHScene(Scene):
 
         return None
 
+    def get_hud_visibility(self):
+        # Si se está en conversación, ocultamos el HUD
+        if self.conversation_active:
+            return False
+
+        return True
+
     def render(self):
         VIRTUAL_WIDTH, VIRTUAL_HEIGHT = 800, 600
         view_width = VIRTUAL_WIDTH / self.DEFAULT_ZOOM

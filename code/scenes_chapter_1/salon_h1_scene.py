@@ -79,6 +79,17 @@ class SalonH1Scene(Scene):
 
         return None
 
+    def get_hud_visibility(self):
+        # Si estamos en el evento de fin de clase, ocultamos el HUD
+        if self.class_event_active:
+            return False
+
+        # Si estamos en el evento celular, ocultamos el HUD
+        if self.cellphone_event_active:
+            return False
+
+        return True
+
     def render(self):
         # Si el evento de fin de clase está activo, se muestra la pantalla en negro con "Fin de clase" y "9:00pm"
         if self.class_event_active:

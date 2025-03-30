@@ -129,7 +129,8 @@ def draw_prompt(surface, pos):
     scaled_pos = (int(pos[0] * scale_x), int(pos[1] * scale_y))
     font_size = max(10, int(18 * scale_y))
     font = pygame.font.SysFont("arial", font_size)
-    prompt_text = "Presiona E para interactuar"
+    # prompt_text = "Presiona E para interactuar"
+    prompt_text = ""
     rendered_prompt = font.render(prompt_text, True, (255, 255, 0))
     prompt_rect = rendered_prompt.get_rect(center=scaled_pos)
     surface.blit(rendered_prompt, prompt_rect)

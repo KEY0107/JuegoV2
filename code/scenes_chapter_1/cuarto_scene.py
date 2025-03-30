@@ -25,6 +25,9 @@ class CuartoScene(Scene):
         self.initial_dialogue_active = show_initial_dialogue
         self.initial_dialogue_text = "Se me hace tarde para ir a la universidad"
 
+    def get_hud_visibility(self):
+        return not self.initial_dialogue_active
+
     def handle_events(self, events):
         for event in events:
             if event.type == pygame.KEYDOWN:
