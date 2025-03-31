@@ -1,6 +1,7 @@
 import pygame
 from map import Map
 from collision_data import get_collisions
+from sound_manager import SoundManager
 from scenes_chapter_1.scene import Scene
 from utils import draw_dialogue
 import globales_chapter_1  # Módulo con las variables globales del capítulo
@@ -15,6 +16,9 @@ class JardinerasNocheScene(Scene):
         self.obstacles = get_collisions("jardineras")
         self.player = player
         self.player_group = pygame.sprite.Group(self.player)
+        self.sound_manager = SoundManager()
+        self.sound_manager.play_background("ambience.mp3", fade_in_ms=1000)
+        self.sound_manager.set_volume(0.1)
         self.DEFAULT_ZOOM = 2
         self.current_map = "jardineras_noche"
 

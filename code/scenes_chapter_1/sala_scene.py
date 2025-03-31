@@ -17,7 +17,7 @@ class SalaScene(Scene):
         self.player = player
         self.player_group = pygame.sprite.Group(self.player)
         self.sound_manager = SoundManager()
-        self.sound_manager.play_background("ciudad.mp3", fade_in_ms=1000)
+        self.sound_manager.play_background("ambience.mp3", fade_in_ms=1000)
         self.sound_manager.set_volume(0.1)
         self.DEFAULT_ZOOM = 2
         self.current_map = "casa_alex_sala"
@@ -154,6 +154,10 @@ class SalaScene(Scene):
         # Ocultar el HUD mientras se está en conversación
         if self.conversation_active:
             return False
+
+        if self.closed_door_text:
+            return False
+
         return True
 
     def render(self):

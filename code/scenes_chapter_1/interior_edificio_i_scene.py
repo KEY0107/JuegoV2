@@ -1,6 +1,7 @@
 import pygame
 from map import Map
 from collision_data import get_collisions
+from sound_manager import SoundManager
 from scenes_chapter_1.scene import Scene
 from utils import draw_dialogue
 import globales_chapter_1  # Variables globales del capítulo
@@ -13,6 +14,9 @@ class InteriorEdificioI(Scene):
         self.obstacles = get_collisions("hallway_i1")
         self.player = player
         self.player_group = pygame.sprite.Group(self.player)
+        self.sound_manager = SoundManager()
+        self.sound_manager.play_background("hallway.mp3", fade_in_ms=1000)
+        self.sound_manager.set_volume(0.1)
         self.DEFAULT_ZOOM = 2
         self.current_map = "interior_edificio_i"
 
