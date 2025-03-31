@@ -122,6 +122,22 @@ class CuartoScene(Scene):
                 )
                 self.screen.blit(text_surface, text_rect)
                 pygame.display.flip()
+                # Esperar a que el jugador presione una tecla para continuar al capítulo 2
+                waiting_for_input = True
+                while waiting_for_input:
+                    for event in pygame.event.get():
+                        if event.type == pygame.QUIT:
+                            pygame.quit()
+                            exit()
+                        elif event.type == pygame.KEYDOWN:
+                            # Cuando el jugador presiona cualquier tecla, avanzamos al capítulo 2
+                            if (
+                                event.key == pygame.K_SPACE
+                            ):  # Puedes usar cualquier tecla aquí
+                                from chapter3 import run_chapter3
+
+                                run_chapter3(self.screen)  # Llama al capítulo 2
+                                waiting_for_input = False
                 return
 
         # Renderizado normal de la escena
