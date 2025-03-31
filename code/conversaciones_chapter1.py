@@ -74,3 +74,96 @@ CONVERSACION_GAEL_OPCION2 = [
 ]
 
 CONVERSACION_GAEL_SIMPLE = [("Alex", "Ya no tengo nada pendiente con él")]
+
+CONVERSACIONES_NPCS = [
+    [
+        ("", "¡Qué día tan bonito para pasear!"),
+        ("Alex", "Sí, el clima es agradable hoy."),
+        ("", "Espero que se mantenga así."),
+    ],
+    [
+        ("", "¿Ya viste el partido de anoche?"),
+        ("Alex", "No, ¿quién ganó?"),
+        ("", "Perdimos por un punto, fue muy intenso."),
+    ],
+    [
+        ("", "La cafetería tiene buenos precios."),
+        ("Alex", "Sí, aunque prefiero traer comida de casa."),
+        ("", "Debería intentarlo alguna vez."),
+    ],
+    [
+        ("", "Odio cuando se termina la tinta del bolígrafo en medio de clase."),
+        ("Alex", "Yo siempre llevo uno de repuesto."),
+        ("", "Buena idea, la pondré en práctica."),
+    ],
+    [
+        ("", "Me gustaría que la biblioteca abriera más temprano."),
+        ("Alex", "A mí también, ayudaría mucho para estudiar antes de clase."),
+        ("", "Quizá deberíamos sugerirlo a la administración."),
+    ],
+    [
+        ("", "¿Crees que el profesor revisará las tareas hoy?"),
+        ("Alex", "Espero que no, olvidé hacer la mía."),
+        ("", "Siempre tan olvidadizo."),
+    ],
+    [
+        ("", "Me encanta el olor a café en la mañana."),
+        ("Alex", "Sí, es la mejor forma de empezar el día."),
+        ("", "Totalmente de acuerdo."),
+    ],
+    [
+        ("", "¿Has leído el libro que recomendó el profesor?"),
+        ("Alex", "Sí, es bastante interesante."),
+        ("", "Lo empezaré esta noche."),
+    ],
+    [
+        ("", "¿Alguien tiene apuntes de la última clase?"),
+        ("Alex", "Yo tengo algunos, puedo pasártelos."),
+        ("", "Te lo agradecería mucho."),
+    ],
+    [
+        ("", "La próxima semana hay exámenes, ¿no?"),
+        ("Alex", "Sí, deberíamos empezar a estudiar desde ahora."),
+        ("", "Buena idea, mejor prevenir que lamentar."),
+    ],
+    [
+        ("", "Ayer fui al cine y vi una película increíble."),
+        ("Alex", "¿Cuál viste?"),
+        ("", "La nueva de acción, te la recomiendo."),
+    ],
+    [
+        ("", "Hoy está muy silenciosa la universidad."),
+        ("Alex", "Debe ser porque muchos ya se fueron de vacaciones."),
+        ("", "Ojalá pronto nos toque a nosotros también."),
+    ],
+    [
+        ("", "¿Sabes dónde queda el banco más cercano?"),
+        ("Alex", "Sí, está dos calles más adelante."),
+        ("", "Gracias por la ayuda."),
+    ],
+    [
+        ("", "Parece que va a llover pronto."),
+        ("Alex", "Sí, mejor busca refugio."),
+        ("", "Eso haré, gracias por el consejo."),
+    ],
+    [
+        ("", "Disculpa, ¿sabes qué hora es?"),
+        ("Alex", "No, lo siento"),
+        ("", "Gracias, de todas formas creo que ya es muy tarde"),
+    ],
+    [
+        ("", "Qué ciudad tan concurrida."),
+        ("Alex", "Sí, siempre hay algo que hacer aquí."),
+        ("", "Es lo que más me gusta."),
+    ],
+    [
+        ("", "Nunca había venido a este lugar."),
+        ("Alex", "Espero que lo disfrutes."),
+        ("", "Gracias, parece interesante."),
+    ],
+    [
+        ("", "Creo que perdí mis llaves."),
+        ("Alex", "¿Necesitas ayuda para buscarlas?"),
+        ("", "No te preocupes, gracias de todas formas."),
+    ],
+]
