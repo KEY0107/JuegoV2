@@ -128,6 +128,12 @@ def run_chapter3(screen):
                 current_scene = BanioIzquierdoI(screen, current_scene.player)
                 hud.player = current_scene.player
 
+            elif next_scene == "restart":
+                from main import main
+                main()
+                return
+
+
         current_scene.render()
         hud.show_inventory = current_scene.get_hud_visibility()
         hud.render(screen)

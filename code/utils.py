@@ -112,9 +112,10 @@ def draw_hotbar(
             # Ajustamos el tamaño del ítem con un margen
             item_margin = int(10 * scale_x)
             item_image = pygame.transform.scale(
-                inventory[i][0],
+                inventory[i].image,
                 (scaled_slot_width - item_margin, scaled_slot_height - item_margin),
             )
+
             surface.blit(
                 item_image,
                 (slot_rect.x + int(5 * scale_x), slot_rect.y + int(5 * scale_y)),
