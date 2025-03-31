@@ -3,6 +3,8 @@ import random
 from map import Map
 from collision_data import get_collisions
 from scenes_chapter_1.scene import Scene
+from monster import Monster
+from death import death_screen
 
 
 class NPC(pygame.sprite.Sprite):
@@ -10,26 +12,6 @@ class NPC(pygame.sprite.Sprite):
         super().__init__()
         self.image = pygame.image.load(image_path).convert_alpha()
         self.rect = self.image.get_rect(topleft=(x, y))
-
-
-class Fantasma(pygame.sprite.Sprite):
-    def __init__(self, positions, image_path="../assets/characters/fantasma_frente.png"):
-        super().__init__()
-        self.image = pygame.image.load(image_path).convert_alpha()
-        self.positions = positions
-        self.current_position = random.choice(self.positions)
-        self.rect = self.image.get_rect(topleft=self.current_position)
-        self.visible = True
-        self.timer = pygame.time.get_ticks()
-        self.interval = 3000  # 3 segundos
-
-    def update(self, current_time):
-        if current_time - self.timer >= self.interval:
-            self.timer = current_time
-            self.visible = not self.visible
-            if self.visible:
-                self.current_position = random.choice(self.positions)
-                self.rect.topleft = self.current_position
 
 
 class EntradaNocheScene(Scene):
@@ -51,16 +33,21 @@ class EntradaNocheScene(Scene):
         self.obstacles.append(self.npc1.rect)
         self.obstacles.append(self.npc2.rect)
 
-        # Fantasma
-        self.fantasma_positions = [
-            (400, 700),
-            (800, 800),
-            (600, 500),
-            (1000, 650),
-            (300, 600),
-            (1200, 450)
-        ]
-        self.fantasma = Fantasma(self.fantasma_positions)
+        # MONSTRUOS
+        self.monsters = pygame.sprite.Group()
+        self.spawn_monsters(5)
+
+        self.damage_cooldown = 1000  # 1 segundo entre daños
+        self.last_damage_time = 0
+
+    def spawn_monsters(self, count):
+        for _ in range(count):
+            x = random.randint(300, 1200)
+            y = random.randint(400, 800)
+            ghost_type = random.choice([1, 2, 3])
+            monster = Monster(x, y, ghost_type)
+            monster.speed = 60  # Más lento
+            self.monsters.add(monster)
 
     def handle_events(self, events):
         pass
@@ -69,9 +56,16 @@ class EntradaNocheScene(Scene):
         self.player.update(dt, self.obstacles)
         self.player.clamp_within_map(self.map.fondo_rect)
 
-        # Actualizar el fantasma
         current_time = pygame.time.get_ticks()
-        self.fantasma.update(current_time)
+        for monster in self.monsters:
+            monster.update(self.player, dt)
+            if self.player.rect.colliderect(monster.rect):
+                if current_time - self.last_damage_time > self.damage_cooldown:
+                    self.player.health -= 10
+                    self.last_damage_time = current_time
+                    if self.player.health <= 0:
+                        if death_screen(self.screen):
+                            return "restart"
 
         # Transiciones
         door_entrada_to_calle = pygame.Rect(0, 960, 300, 10)
@@ -111,29 +105,16 @@ class EntradaNocheScene(Scene):
 
         self.map.draw_fondo(world_surface, camera_offset)
 
-        # Dibujar jugador
         for sprite in self.player_group:
-            world_surface.blit(
-                sprite.image,
-                (sprite.rect.x - camera_offset[0], sprite.rect.y - camera_offset[1])
-            )
+            world_surface.blit(sprite.image, (sprite.rect.x - camera_offset[0], sprite.rect.y - camera_offset[1]))
 
-        # Dibujar NPCs
         for npc in self.npc_group:
-            world_surface.blit(
-                npc.image,
-                (npc.rect.x - camera_offset[0], npc.rect.y - camera_offset[1])
-            )
+            world_surface.blit(npc.image, (npc.rect.x - camera_offset[0], npc.rect.y - camera_offset[1]))
 
-        # Dibujar fantasma si está visible
-        if self.fantasma.visible:
-            world_surface.blit(
-                self.fantasma.image,
-                (self.fantasma.rect.x - camera_offset[0], self.fantasma.rect.y - camera_offset[1])
-            )
+        for monster in self.monsters:
+            monster.draw(world_surface, camera_offset)
 
         self.map.draw_primer_plano(world_surface, camera_offset)
 
-        current_width, current_height = self.screen.get_size()
-        scaled_surface = pygame.transform.scale(world_surface, (current_width, current_height))
+        scaled_surface = pygame.transform.scale(world_surface, self.screen.get_size())
         self.screen.blit(scaled_surface, (0, 0))
