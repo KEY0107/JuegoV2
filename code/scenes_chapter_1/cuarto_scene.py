@@ -5,6 +5,7 @@ from player import Player
 from sound_manager import SoundManager
 from utils import draw_dialogue
 from scenes_chapter_1.scene import Scene
+import globales_chapter_1  # Módulo con las variables globales del capítulo
 
 
 class CuartoScene(Scene):
@@ -25,16 +26,51 @@ class CuartoScene(Scene):
         self.initial_dialogue_active = show_initial_dialogue
         self.initial_dialogue_text = "Se me hace tarde para ir a la universidad"
 
+        # // NUEVO: Variables para la secuencia final
+        self.final_screen_phase = (
+            None  # None si aún no se ha iniciado la secuencia final
+        )
+        self.final_screen_timer = 0
+        self.final_screen_image = None  # Se cargará la imagen del teléfono
+
     def get_hud_visibility(self):
-        return not self.initial_dialogue_active
+        # Mientras se muestre la conversación o la secuencia final no se muestra el HUD
+        if self.initial_dialogue_active or self.final_screen_phase is not None:
+            return False
+        return True
 
     def handle_events(self, events):
+        # Si se está en la secuencia final, no se procesan eventos
+        if self.final_screen_phase is not None:
+            return
         for event in events:
             if event.type == pygame.KEYDOWN:
                 if self.initial_dialogue_active and event.key == pygame.K_e:
                     self.initial_dialogue_active = False
 
     def update(self, dt):
+        # // NUEVO: Si la variable global FINAL_SCREEN_UNLOCKED es True, iniciar/actualizar secuencia final
+        if globales_chapter_1.FINAL_SCREEN_UNLOCKED:
+            if self.final_screen_phase is None:
+                # Inicia la secuencia final en la fase 0 (mostrar imagen y mensaje)
+                self.final_screen_phase = 0
+                self.final_screen_timer = 3000  # 3 segundos
+                # Cargar la imagen (ajusta la ruta si es necesario)
+                self.final_screen_image = pygame.image.load(
+                    "../assets/items/unknown_mensaje.png"
+                ).convert_alpha()
+            else:
+                self.final_screen_timer -= dt
+                # Cuando termine la fase 0, pasa a la fase 1
+                if self.final_screen_phase == 0 and self.final_screen_timer <= 0:
+                    self.final_screen_phase = 1
+                    self.final_screen_timer = (
+                        3000  # 3 segundos para la pantalla de "FIN DEL CAPITULO"
+                    )
+            # Durante la secuencia final no se actualiza al jugador
+            return None
+
+        # Actualización normal si no se muestra la secuencia final
         if not self.initial_dialogue_active:
             self.player.update(dt, self.obstacles)
             self.player.clamp_within_map(self.map.fondo_rect)
@@ -47,6 +83,48 @@ class CuartoScene(Scene):
         return None
 
     def render(self):
+        # // NUEVO: Si se está en la secuencia final, se renderiza la pantalla final y se sale
+        if self.final_screen_phase is not None:
+            if self.final_screen_phase == 0:
+                # Fase 0: mostrar pantalla negra con la imagen del teléfono y el mensaje
+                self.screen.fill((0, 0, 0))
+                if self.final_screen_image:
+                    # Centramos la imagen en pantalla
+                    image_rect = self.final_screen_image.get_rect(
+                        center=(
+                            self.screen.get_width() // 2,
+                            self.screen.get_height() // 2,
+                        )
+                    )
+                    self.screen.blit(self.final_screen_image, image_rect)
+                font = pygame.font.SysFont("arial", 36, bold=False)
+                text_surface = font.render(
+                    "No lo ignores. Pregunta a los que estuvieron ahí.",
+                    True,
+                    (255, 255, 255),
+                )
+                text_rect = text_surface.get_rect(
+                    center=(
+                        self.screen.get_width() // 2,
+                        self.screen.get_height() // 2 + 100,
+                    )
+                )
+                self.screen.blit(text_surface, text_rect)
+                pygame.display.flip()
+                return
+            elif self.final_screen_phase == 1:
+                # Fase 1: mostrar pantalla negra con el texto "FIN DEL CAPITULO"
+                self.screen.fill((0, 0, 0))
+                font = pygame.font.SysFont("arial", 48, bold=True)
+                text_surface = font.render("FIN DEL CAPITULO", True, (255, 255, 255))
+                text_rect = text_surface.get_rect(
+                    center=(self.screen.get_width() // 2, self.screen.get_height() // 2)
+                )
+                self.screen.blit(text_surface, text_rect)
+                pygame.display.flip()
+                return
+
+        # Renderizado normal de la escena
         VIRTUAL_WIDTH, VIRTUAL_HEIGHT = 800, 600
         view_width = VIRTUAL_WIDTH / self.DEFAULT_ZOOM
         view_height = VIRTUAL_HEIGHT / self.DEFAULT_ZOOM

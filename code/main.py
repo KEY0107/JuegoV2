@@ -20,9 +20,9 @@ def main():
     start_screen(screen)
 
     # capitulo 1
-    from chapter1 import run_chapter1
+    from chapter3 import run_chapter3
 
-    run_chapter1(screen)
+    run_chapter3(screen)
 
     pygame.quit()
 

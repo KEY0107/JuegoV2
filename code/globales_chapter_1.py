@@ -1,10 +1,18 @@
-# Indica si ya se desbloqueó la zona de interior_edificio_i
+FANTASMA_VENTANA = False
 INTERIOR_EDIFICIO_I_AVAILABLE = False
-# Controla que el evento de fin de clase en SalonH1Scene se active solo una vez
 FIN_CLASE_EVENTO_ACTIVADO = False
-
-# conversacion inicial con emiliano
 EMILIAN_CONVERSATION_DONE = False
-
-
 EMILIAN_VISIBLE = True
+NOTA_UNLOCKED = False
+NOTA_DIALOGO = False
+NOTA_ALREADY_SEEN = False
+MARIAN_VISIBLE = True
+MARIAN_CONVERSATION_DONE = False
+
+EVENT_FANTASMA_DONE = False
+
+NOTA_SALON_TAKEN = False
+GAEL_VISIBLE = False
+GAEL_CONVERSATION_DONE = False
+
+FINAL_SCREEN_UNLOCKED = False
