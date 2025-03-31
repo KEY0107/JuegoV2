@@ -1,27 +1,34 @@
+import os
 import pygame
 import sys
 import cv2
 from settings import FPS  # Asegúrate de que FPS esté definido en settings
 
-
 def start_screen(screen):
     """
-    Pantalla de inicio que reproduce "pantallainicio.mp4" como fondo,
+    Pantalla de inicio que reproduce "pantallainicio_compatible.mp4" como fondo,
     muestra un menú con las opciones "Iniciar juego" y "Salir", y reproduce
     música de fondo.
 
     Se utiliza OpenCV para leer el video frame a frame, actualizándolo
     con un factor de lentitud.
     """
+    # Subir un nivel desde "code" para llegar a la raíz del proyecto ("Terror")
+    base_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    
+    # Construir las rutas de video y música
+    video_path = os.path.join(base_path, "assets", "fondos", "pantallainicio_compatible.mp4")
+    music_path = os.path.join(base_path, "assets", "sound", "song_bg.mp3")
+
     # Inicializar la captura de video con OpenCV
-    cap = cv2.VideoCapture("../assets/fondos/pantallainicio_compatible.mp4")
+    cap = cv2.VideoCapture(video_path)
     if not cap.isOpened():
-        print("Error al abrir el video")
+        print("Error al abrir el video en:", video_path)
         pygame.quit()
         sys.exit()
 
     # Cargar y reproducir música de fondo (en loop)
-    pygame.mixer.music.load("../assets/sound/song_bg.mp3")
+    pygame.mixer.music.load(music_path)
     pygame.mixer.music.set_volume(0.5)
     pygame.mixer.music.play(-1)
 
@@ -44,7 +51,7 @@ def start_screen(screen):
     if video_fps <= 0:
         video_fps = 60
 
-    # Factor para ralentizar el video (0.5 = la mitad de la velocidad)
+    # Factor para ralentizar el video (1 = velocidad normal)
     slow_factor = 1
     effective_fps = video_fps * slow_factor
     frame_interval = 1000 / effective_fps  # en milisegundos
@@ -85,7 +92,6 @@ def start_screen(screen):
         for i, option in enumerate(options):
             color = (255, 255, 0) if i == selected_option else (255, 255, 255)
             text_surface = font.render(option, True, color)
-            # Se centra el texto horizontalmente y se posiciona verticalmente relativo a current_height
             text_rect = text_surface.get_rect(
                 center=(current_width // 2, current_height - 100 + i * 40)
             )
