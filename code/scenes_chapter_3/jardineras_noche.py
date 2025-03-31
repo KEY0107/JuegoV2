@@ -8,14 +8,14 @@ import globales_chapter_1
 
 
 class NPC(pygame.sprite.Sprite):
-    def __init__(self, x, y, image_path="../assets/characters/NPC_1.png"):
+    def __init__(self, x, y, image_path="/assets/characters/NPC_1.png"):
         super().__init__()
         self.image = pygame.image.load(image_path).convert_alpha()
         self.rect = self.image.get_rect(topleft=(x, y))
 
 
 class Fantasma(pygame.sprite.Sprite):
-    def __init__(self, positions, image_path="../assets/characters/fantasma_frente.png"):
+    def __init__(self, positions, image_path="/assets/characters/fantasma_frente.png"):
         super().__init__()
         self.image = pygame.image.load(image_path).convert_alpha()
         self.positions = positions
@@ -45,9 +45,9 @@ class JardinerasNocheScene(Scene):
         self.current_map = "jardineras_noche"
 
         # NPCs
-        self.npc1 = NPC(375, 840, "../assets/characters/NPC_4.png")
-        self.npc2 = NPC(1010, 530, "../assets/characters/NPC_5.png")
-        self.npc3 = NPC(1260, 845, "../assets/characters/NPC_3.png")
+        self.npc1 = NPC(375, 840, "/assets/characters/NPC_4.png")
+        self.npc2 = NPC(1010, 530, "/assets/characters/NPC_5.png")
+        self.npc3 = NPC(1260, 845, "/assets/characters/NPC_3.png")
         self.npc_group = pygame.sprite.Group(self.npc1, self.npc2, self.npc3)
 
         # Agregar colisiones para NPCs

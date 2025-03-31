@@ -42,7 +42,7 @@ class InteriorEdificioI2(Scene):
 
         try:
             self.puerta_sound = pygame.mixer.Sound(
-                "../assets/sound/puerta_cerrandose.mp3"
+                "/assets/sound/puerta_cerrandose.mp3"
             )
         except Exception as e:
             print("Error loading puerta_cerrandose.mp3:", e)

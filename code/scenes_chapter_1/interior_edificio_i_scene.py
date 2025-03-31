@@ -19,7 +19,7 @@ class InteriorEdificioI(Scene):
         # Agregar la nota
         try:
             self.note_img = pygame.image.load(
-                "../assets/items/nota1.png"
+                "/assets/items/nota1.png"
             ).convert_alpha()
             self.note_img = pygame.transform.scale(self.note_img, (20, 20))
         except Exception as e:
