@@ -6,7 +6,9 @@ from sound_manager import SoundManager
 from scenes_chapter_1.scene import Scene
 from npc import NPC
 from utils import draw_dialogue, draw_prompt
+import conversacion_emiliano2  # Asegúrate de importar la conversación de Emiliano
 import conversaciones_chapter1
+from player import Player  # Asegúrate de importar la clase Player
 
 
 class CalleScene(Scene):
@@ -37,6 +39,7 @@ class CalleScene(Scene):
                 "conversation_lines": [],
                 "conversation_line_index": 0,
                 "conversation_cooldown": 0,
+                "conversation_options": [],  # Almacenamos las opciones del jugador aquí
             }
 
     def handle_events(self, events):
@@ -46,9 +49,8 @@ class CalleScene(Scene):
                     state = self.npc_states[npc]
                     if state["conversation_active"]:
                         state["conversation_line_index"] += 1
-                        if state["conversation_line_index"] >= len(
-                            state["conversation_lines"]
-                        ):
+                        if state["conversation_line_index"] >= len(state["conversation_lines"]):
+                            # Si se acaba la conversación, desactivamos
                             state["conversation_active"] = False
                             state["conversation_lines"] = []
                             state["conversation_line_index"] = 0
@@ -75,10 +77,13 @@ class CalleScene(Scene):
                 and not any(s["conversation_active"] for s in self.npc_states.values())
             ):
                 state["conversation_active"] = True
-                state["conversation_lines"] = random.choice(
-                    conversaciones_chapter1.CONVERSACIONES_NPCS
-                )
-                state["conversation_line_index"] = 0
+                if npc.name == "Emiliano":
+                    # Directamente se asigna la conversación de la opción 1 de Emiliano
+                    state["conversation_lines"] = conversacion_emiliano2.CONVERSACION_EMILIANO_OPCION1
+                    state["conversation_line_index"] = 0
+                    state["conversation_active"] = True
+                else:
+                    state["conversation_lines"] = random.choice(conversaciones_chapter1.CONVERSACIONES_NPCS)
                 state["conversation_cooldown"] = 500
 
         # Transición: puerta para volver a la sala (por ejemplo)
