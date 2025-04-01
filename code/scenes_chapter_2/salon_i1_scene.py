@@ -5,8 +5,8 @@ from scenes_chapter_1.scene import Scene
 
 
 class SalonI1(Scene):
-    def _init_(self, screen, player):
-        super()._init_(screen)
+    def __init__(self, screen, player):
+        super().__init__(screen)
         # Cargar los assets para el interior del edificio H
         self.map = Map("salon_i1.png")
         # Se asume que las colisiones están definidas con la clave "edificio_h"

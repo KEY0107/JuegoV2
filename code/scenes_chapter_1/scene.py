@@ -3,7 +3,9 @@ import pygame
 
 class Scene:
     def __init__(self, screen):
+        print("Inicializando Scene con screen:", screen)
         self.screen = screen
+
 
     def handle_events(self, events):
         pass

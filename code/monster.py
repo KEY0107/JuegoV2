@@ -11,16 +11,16 @@ class Monster(pygame.sprite.Sprite):
         if ghost_type == 1:
             # Espectro 1: se usan imágenes distintas para cada dirección
             image_front = pygame.image.load(
-                "/assets/monstruo/espectro1_espalda1.png"
+                "assets/monstruo/espectro1_espalda1.png"
             ).convert_alpha()
             image_down = pygame.image.load(
-                "/assets/monstruo/espectro1_frente1.png"
+                "assets/monstruo/espectro1_frente1.png"
             ).convert_alpha()
             image_right = pygame.image.load(
-                "/assets/monstruo/espectro1_derecha1.png"
+                "assets/monstruo/espectro1_derecha1.png"
             ).convert_alpha()
             image_left = pygame.image.load(
-                "/assets/monstruo/espectro1_izquierda1.png"
+                "assets/monstruo/espectro1_izquierda1.png"
             ).convert_alpha()
             self.images = {
                 "up": image_front,
@@ -31,16 +31,16 @@ class Monster(pygame.sprite.Sprite):
         elif ghost_type == 2:
             # Espectro 2: se utiliza la misma imagen para todas las direcciones
             image_front = pygame.image.load(
-                "/assets/monstruo/espectro3_espalda1.png"
+                "assets/monstruo/espectro3_espalda1.png"
             ).convert_alpha()
             image_down = pygame.image.load(
-                "/assets/monstruo/espectro3_frente1.png"
+                "assets/monstruo/espectro3_frente1.png"
             ).convert_alpha()
             image_right = pygame.image.load(
-                "/assets/monstruo/espectro3_derecha1.png"
+                "assets/monstruo/espectro3_derecha1.png"
             ).convert_alpha()
             image_left = pygame.image.load(
-                "/assets/monstruo/espectro3_izquierda1.png"
+                "assets/monstruo/espectro3_izquierda1.png"
             ).convert_alpha()
             self.images = {
                 "up": image_front,
@@ -51,16 +51,16 @@ class Monster(pygame.sprite.Sprite):
         elif ghost_type == 3:
             # Espectro 3: similar al 2
             image_front = pygame.image.load(
-                "/assets/monstruo/espectro4_espalda1.png"
+                "assets/monstruo/espectro4_espalda1.png"
             ).convert_alpha()
             image_down = pygame.image.load(
-                "/assets/monstruo/espectro4_frente1.png"
+                "assets/monstruo/espectro4_frente1.png"
             ).convert_alpha()
             image_right = pygame.image.load(
-                "/assets/monstruo/espectro4_derecha1.png"
+                "assets/monstruo/espectro4_derecha1.png"
             ).convert_alpha()
             image_left = pygame.image.load(
-                "/assets/monstruo/espectro4_izquierda1.png"
+                "assets/monstruo/espectro4_izquierda1.png"
             ).convert_alpha()
             self.images = {
                 "up": image_front,
@@ -71,16 +71,16 @@ class Monster(pygame.sprite.Sprite):
         else:
             # Por defecto: se usa una imagen básica
             image_front = pygame.image.load(
-                "/assets/monstruo/monstruo_arriba.png"
+                "assets/monstruo/monstruo_arriba.png"
             ).convert_alpha()
             image_down = pygame.image.load(
-                "/assets/monstruo/monstruo_abajo.png"
+                "assets/monstruo/monstruo_abajo.png"
             ).convert_alpha()
             image_right = pygame.image.load(
-                "/assets/monstruo/monstruo_derecha.png"
+                "assets/monstruo/monstruo_derecha.png"
             ).convert_alpha()
             image_left = pygame.image.load(
-                "/assets/monstruo/monstruo_izquierda.png"
+                "assets/monstruo/monstruo_izquierda.png"
             ).convert_alpha()
             self.images = {
                 "up": image_front,
@@ -126,3 +126,9 @@ class Monster(pygame.sprite.Sprite):
         bar_y = self.rect.y - camera_offset[1] - 10
         pygame.draw.rect(surface, (255, 0, 0), (bar_x, bar_y, bar_width, bar_height))
         pygame.draw.rect(surface, (0, 255, 0), (bar_x, bar_y, fill_width, bar_height))
+
+    def take_damage(self, damage):
+        self.health -= damage
+        print(f"Monstruo recibió {damage} de daño. Salud restante: {self.health}")
+        if self.health <= 0:
+            self.kill()  # Esto elimina al monstruo del grupo de sprites

@@ -21,7 +21,7 @@ def draw_dialogue(surface, name, text, face_expression=None):
     face_padding = int(dialogue_box_height * 0.1)
     face_size = int(dialogue_box_height * 0.8)  # ancho y alto del cuadro de rostro
     if face_expression:
-        face_path = f"/assets/characters_dialog/{face_expression}.png"
+        face_path = f"assets/characters_dialog/{face_expression}.png"
         try:
             face_img = pygame.image.load(face_path).convert_alpha()
             face_img = pygame.transform.scale(face_img, (face_size, face_size))

@@ -2,7 +2,7 @@ import pygame
 
 
 class Scene:
-    def _init_(self, screen):
+    def __init__(self, screen):
         self.screen = screen
 
     def handle_events(self, events):

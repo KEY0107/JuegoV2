@@ -10,8 +10,8 @@ import conversaciones_chapter1  # Archivo con las líneas de conversación para 
 
 
 class SalaScene(Scene):
-    def _init_(self, screen, player):
-        super()._init_(screen)
+    def __init__(self, screen, player):
+        super().__init__(screen)
         self.map = Map("casa_alex_sala.png")
         self.obstacles = get_collisions("casa_alex_sala")
         self.player = player

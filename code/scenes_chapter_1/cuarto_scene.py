@@ -134,9 +134,9 @@ class CuartoScene(Scene):
                             if (
                                 event.key == pygame.K_SPACE
                             ):  # Puedes usar cualquier tecla aquí
-                                from chapter3 import run_chapter3
+                                from chapter2 import run_chapter2
 
-                                run_chapter3(self.screen)  # Llama al capítulo 2
+                                run_chapter2(self.screen)  # Llama al capítulo 2
                                 waiting_for_input = False
                 return
 

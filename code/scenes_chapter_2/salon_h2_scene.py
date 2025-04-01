@@ -7,8 +7,8 @@ import globales_chapter_1
 
 
 class Note(pygame.sprite.Sprite):
-    def _init_(self, x, y, image_path, text, note_flag):
-        super()._init_()
+    def __init__(self, x, y, image_path, text, note_flag):
+        super().__init__()
         self.original_image = pygame.image.load(image_path).convert_alpha()
         self.image = pygame.transform.scale(self.original_image, (17, 11))
         self.rect = self.image.get_rect(topleft=(x, y))
@@ -19,8 +19,8 @@ class Note(pygame.sprite.Sprite):
 class SalonH2Scene(Scene):
     note_taken_flag = False  # Atributo estático para la bandera de la nota tomada
 
-    def _init_(self, screen, player):
-        super()._init_(screen)
+    def __init__(self, screen, player):
+        super().__init__(screen)
         # Cargar los assets para el interior del edificio H pasillo segundo piso
         self.map = Map("salon_h2.png")
         self.obstacles = get_collisions("salon_h2")
@@ -30,7 +30,7 @@ class SalonH2Scene(Scene):
         self.current_map = "salon_h2"
 
         # Crear la nueva nota en la posición (391, 206) con los mensajes proporcionados
-        self.note = Note(391, 206, "/assets/items/nota1.png", 
+        self.note = Note(391, 206, "assets/items/nota1.png", 
                          "No debí venir hoy. Algo no está bien.\n"
                          "A veces siento que el aire se vuelve pesado, como si algo me estuviera aplastando.", 
                          globales_chapter_1.NOTA_SALON_TAKEN)

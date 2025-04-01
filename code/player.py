@@ -29,6 +29,9 @@ class Player(pygame.sprite.Sprite):
         self.attack_duration = 200
         self.attack_timer = 0
 
+        self.scissors_image = pygame.image.load("assets/items/tijeras.png").convert_alpha()
+        self.scissors_image = pygame.transform.scale(self.scissors_image, (30, 30))
+
         self.attack_left_sprite = pygame.image.load(os.path.join(CHARACTERS_DIR, "attack_left.png")).convert_alpha()
         self.attack_right_sprite = pygame.image.load(os.path.join(CHARACTERS_DIR, "attack_right.png")).convert_alpha()
         self.attack_up_sprite = pygame.image.load(os.path.join(CHARACTERS_DIR, "attack_up.png")).convert_alpha()
@@ -43,6 +46,7 @@ class Player(pygame.sprite.Sprite):
         self.hud = None  # Se asignará externamente
 
     def update(self, dt, obstacles):
+        # Si se está atacando, se actualiza el temporizador y se cambia el sprite
         if self.attacking:
             self.attack_timer -= dt
             if self.attack_timer <= 0:
@@ -56,8 +60,9 @@ class Player(pygame.sprite.Sprite):
                 self.image = self.attack_up_sprite
             elif self.direction == "down":
                 self.image = self.attack_down_sprite
-            return
+            return  # Se sale del update para evitar movimientos o animaciones adicionales
 
+        # Si no está atacando, se actualizan movimientos y animaciones
         self.handle_input(obstacles)
         self.animation_timer += dt
         if self.is_moving:
@@ -78,6 +83,29 @@ class Player(pygame.sprite.Sprite):
             self.handle_joystick(obstacles)
         else:
             self.handle_keys(obstacles)
+    
+    def draw(self, surface, camera_offset):
+        # Dibuja el sprite base del jugador
+        surface.blit(self.image, (self.rect.x - camera_offset[0], self.rect.y - camera_offset[1]))
+        
+        # Si se está atacando y se tiene equipado el arma (tijeras), dibuja la imagen del arma con offsets
+        if self.attacking:
+            # Define offsets por dirección (ajústalos según lo que necesites)
+            offsets = {
+                "up": (10, -5),
+                "down": (10, 5),
+                "left": (-5, 0),
+                "right": (20, 0)
+            }
+            offset = offsets.get(self.direction, (0, 0))
+            # Escala la imagen a un tamaño adecuado (por ejemplo, 20x20)
+            weapon_image = pygame.transform.scale(self.scissors_image, (20, 20))
+            # Dibuja el arma en base al rectángulo del jugador y los offsets
+            surface.blit(
+                weapon_image,
+                (self.rect.x + offset[0] - camera_offset[0],
+                self.rect.y + offset[1] - camera_offset[1])
+            )
 
     def handle_keys(self, obstacles):
         keys = pygame.key.get_pressed()
@@ -155,3 +183,16 @@ class Player(pygame.sprite.Sprite):
             self.rect.top = map_rect.top
         if self.rect.bottom > map_rect.bottom:
             self.rect.bottom = map_rect.bottom
+            
+    def get_attack_hitbox(self):
+        # Define un área de ataque basado en la dirección del jugador
+        if self.direction == "up":
+            return pygame.Rect(self.rect.centerx - 15, self.rect.top - 20, 30, 20)
+        elif self.direction == "down":
+            return pygame.Rect(self.rect.centerx - 15, self.rect.bottom, 30, 20)
+        elif self.direction == "left":
+            return pygame.Rect(self.rect.left - 20, self.rect.centery - 15, 20, 30)
+        elif self.direction == "right":
+            return pygame.Rect(self.rect.right, self.rect.centery - 15, 20, 30)
+        else:
+            return self.rect.copy()

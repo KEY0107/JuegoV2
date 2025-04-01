@@ -7,8 +7,8 @@ import globales_chapter_1
 
 
 class InteriorEdificioHScene(Scene):
-    def _init_(self, screen, player):
-        super()._init_(screen)
+    def __init__(self, screen, player):
+        super().__init__(screen)
         self.map = Map("pasillo_h1.png")
         self.obstacles = get_collisions("hallway_h1")
         self.player = player

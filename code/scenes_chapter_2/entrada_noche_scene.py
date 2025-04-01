@@ -13,8 +13,8 @@ from scenes_chapter_2.interior_cafeteria import InteriorCafeteriaScene
 from scenes_chapter_2.interior_edificio_i2_scene import InteriorEdificioI2  
 
 class EntradaNocheScene(Scene):
-    def _init_(self, screen, player=None):
-        super()._init_(screen)
+    def __init__(self, screen, player=None):
+        super().__init__(screen)
         
         # Si no se pasa un jugador, creamos uno por defecto
         self.player = player if player is not None else Player(150, 900)

@@ -7,8 +7,8 @@ from scenes_chapter_2.scene import Scene
 
 
 class CuartoScene(Scene):
-    def _init_(self, screen, player=None):
-        super()._init_(screen)
+    def __init__(self, screen, player=None):
+        super().__init__(screen)
         self.map = Map("casa_alex_cuarto.png")
         self.obstacles = get_collisions("casa_alex_cuarto")
         self.player = Player(180, 170) if player is None else player

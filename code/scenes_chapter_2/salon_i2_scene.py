@@ -6,8 +6,8 @@ import globales_chapter_1
 
 
 class SalonI2(Scene):
-    def _init_(self, screen, player):
-        super()._init_(screen)
+    def __init__(self, screen, player):
+        super().__init__(screen)
         self.map = Map("salon_i2.png")
         self.obstacles = get_collisions("salon_i2")
         self.player = player
@@ -20,7 +20,7 @@ class SalonI2(Scene):
         if not globales_chapter_1.NOTA_SALON_TAKEN:
             try:
                 self.note_img = pygame.image.load(
-                    "/assets/items/nota2.png"
+                    "assets/items/nota2.png"
                 ).convert_alpha()
                 self.note_img = pygame.transform.scale(self.note_img, (20, 20))
             except Exception as e:

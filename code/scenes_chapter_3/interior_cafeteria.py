@@ -10,8 +10,8 @@ import conversaciones_chapter2
 
 
 class InteriorCafeteriaScene(Scene):
-    def _init_(self, screen, player):
-        super()._init_(screen)
+    def __init__(self, screen, player):
+        super().__init__(screen)
         # Cargar los assets del interior de la cafetería
         self.map = Map("interior_cafeteria.png", "cafeteria_interior_objetos.png")
         # Se asume que las colisiones están definidas con la clave "interior_cafeteria"

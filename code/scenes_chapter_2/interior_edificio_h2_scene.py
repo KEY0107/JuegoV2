@@ -6,8 +6,8 @@ from scenes_chapter_1.scene import Scene
 
 
 class InteriorEdificioH2Scene(Scene):
-    def _init_(self, screen, player):
-        super()._init_(screen)
+    def __init__(self, screen, player):
+        super().__init__(screen)
         # Cargar los assets para el interior del edificio H pasillo segundo piso
         self.map = Map("pasillo_h2.png")
 

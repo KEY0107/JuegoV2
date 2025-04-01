@@ -8,8 +8,8 @@ from scenes_chapter_2.interior_cafeteria import InteriorCafeteriaScene
 from scenes_chapter_2.interior_edificio_i2_scene import InteriorEdificioI2  
 
 class InteriorEdificioI(Scene):
-    def _init_(self, screen, player):
-        super()._init_(screen)
+    def __init__(self, screen, player):
+        super().__init__(screen)
         self.screen = screen
         self.map = Map("pasillo_i1.png")
         self.obstacles = get_collisions("hallway_i1")
@@ -19,7 +19,7 @@ class InteriorEdificioI(Scene):
         self.current_map = "interior_edificio_i"
         
         # Inicializar la sombra y temporizador de parpadeo
-        self.shadow_img = pygame.image.load("/assets/characters/fantasma_frente.png").convert_alpha()
+        self.shadow_img = pygame.image.load("assets/characters/fantasma_frente.png").convert_alpha()
         self.shadow_img = pygame.transform.scale(self.shadow_img, (20, 20))  # Ajusta el tamaño de la sombra
         self.shadow_rect = self.shadow_img.get_rect(topleft=(277, 218))
         self.shadow_visible = False

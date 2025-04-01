@@ -6,8 +6,8 @@ from scenes_chapter_1.scene import Scene
 from utils import draw_dialogue, draw_prompt
 
 class Note(pygame.sprite.Sprite):
-    def _init_(self, x, y, image_path, text, note_flag):
-        super()._init_()
+    def __init__(self, x, y, image_path, text, note_flag):
+        super().__init__()
         self.original_image = pygame.image.load(image_path).convert_alpha()
         self.image = pygame.transform.scale(self.original_image, (17, 11))
         self.rect = self.image.get_rect(topleft=(x, y))
@@ -18,8 +18,8 @@ class Note(pygame.sprite.Sprite):
 class InteriorEdificioI2(Scene):
     note_taken_flag = False  # Atributo estático para la bandera de la nota tomada
 
-    def _init_(self, screen, player):
-        super()._init_(screen)
+    def __init__(self, screen, player):
+        super().__init__(screen)
         self.map = Map("pasillo_i2.png")
         self.obstacles = get_collisions("hallway_i2")
         self.player = player
@@ -31,7 +31,7 @@ class InteriorEdificioI2(Scene):
         self.current_map = "interior_edificio_i2"
 
         # Crear la nota en la posición deseada
-        self.note = Note(219, 264, "/assets/items/nota2.png", 
+        self.note = Note(219, 264, "assets/items/nota2.png", 
                          "No puedo confiar en mis recuerdos. ¿Estoy imaginando todo esto?\n"
                          " Vamos a la cafeteria, necesito un respiro", 
                          InteriorEdificioI2.note_taken_flag)

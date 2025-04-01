@@ -12,8 +12,8 @@ from player import Player  # Asegúrate de importar la clase Player
 
 
 class CalleScene(Scene):
-    def _init_(self, screen, player):
-        super()._init_(screen)
+    def __init__(self, screen, player):
+        super().__init__(screen)
         self.map = Map("camino_casa_noche.png", "camino_casa_noche_objetos.png")
         self.obstacles = get_collisions("calle")
         self.player = player

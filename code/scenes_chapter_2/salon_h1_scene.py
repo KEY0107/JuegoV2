@@ -10,8 +10,8 @@ import conversaciones_chapter1
 
 
 class SalonH1Scene(Scene):
-    def _init_(self, screen, player):
-        super()._init_(screen)
+    def __init__(self, screen, player):
+        super().__init__(screen)
         # Cargar los assets para el interior del edificio H (pasillo segundo piso)
         self.map = Map("salon_h1.png")
         self.obstacles = get_collisions("salon_h1")
