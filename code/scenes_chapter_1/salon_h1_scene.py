@@ -33,7 +33,7 @@ class SalonH1Scene(Scene):
         self.cellphone_event_active = False
         self.cellphone_event_timer = 0  # Duración del evento celular (ms)
         # Cargar el sonido del aula
-        self.classroom_sound = pygame.mixer.Sound("../assets/sound/classroom.mp3")
+        self.classroom_sound = pygame.mixer.Sound("/assets/sound/classroom.mp3")
 
         # Crear múltiples NPCs
         self.npcs = [
@@ -180,7 +180,7 @@ class SalonH1Scene(Scene):
             self.screen.fill((0, 0, 0))
             try:
                 cellphone_img = pygame.image.load(
-                    "../assets/items/marian_mensaje.png"
+                    "/assets/items/marian_mensaje.png"
                 ).convert_alpha()
                 # Escalar la imagen a un tamaño adecuado (por ejemplo, 200x200)
                 cellphone_img = pygame.transform.scale(cellphone_img, (400, 700))

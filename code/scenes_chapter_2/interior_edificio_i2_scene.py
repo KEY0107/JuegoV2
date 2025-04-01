@@ -31,7 +31,7 @@ class InteriorEdificioI2(Scene):
         self.current_map = "interior_edificio_i2"
 
         # Crear la nota en la posición deseada
-        self.note = Note(219, 264, "../assets/items/nota2.png", 
+        self.note = Note(219, 264, "/assets/items/nota2.png", 
                          "No puedo confiar en mis recuerdos. ¿Estoy imaginando todo esto?\n"
                          " Vamos a la cafeteria, necesito un respiro", 
                          InteriorEdificioI2.note_taken_flag)

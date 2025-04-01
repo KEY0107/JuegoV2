@@ -1,6 +1,7 @@
 import pygame
 import sys
 import cv2
+import os
 from settings import FPS  # Asegúrate de que FPS esté definido en settings
 
 
@@ -14,14 +15,18 @@ def start_screen(screen):
     con un factor de lentitud.
     """
     # Inicializar la captura de video con OpenCV
-    cap = cv2.VideoCapture("../assets/fondos/pantallainicio_compatible.mp4")
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    video_path = os.path.join(base_dir, "..", "assets", "fondos", "pantallainicio_compatible.mp4")
+
+    cap = cv2.VideoCapture(video_path)
     if not cap.isOpened():
         print("Error al abrir el video")
         pygame.quit()
         sys.exit()
 
     # Cargar y reproducir música de fondo (en loop)
-    pygame.mixer.music.load("../assets/sound/song_bg.mp3")
+    music_path = os.path.join(base_dir, "..", "assets", "sound", "song_bg.mp3")
+    pygame.mixer.music.load(music_path)
     pygame.mixer.music.set_volume(0.5)
     pygame.mixer.music.play(-1)
 

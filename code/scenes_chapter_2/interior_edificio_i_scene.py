@@ -19,7 +19,7 @@ class InteriorEdificioI(Scene):
         self.current_map = "interior_edificio_i"
         
         # Inicializar la sombra y temporizador de parpadeo
-        self.shadow_img = pygame.image.load("../assets/characters/fantasma_frente.png").convert_alpha()
+        self.shadow_img = pygame.image.load("/assets/characters/fantasma_frente.png").convert_alpha()
         self.shadow_img = pygame.transform.scale(self.shadow_img, (20, 20))  # Ajusta el tamaño de la sombra
         self.shadow_rect = self.shadow_img.get_rect(topleft=(277, 218))
         self.shadow_visible = False

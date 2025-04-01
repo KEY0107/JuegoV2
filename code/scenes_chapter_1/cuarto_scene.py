@@ -57,7 +57,7 @@ class CuartoScene(Scene):
                 self.final_screen_timer = 3000  # 3 segundos
                 # Cargar la imagen (ajusta la ruta si es necesario)
                 self.final_screen_image = pygame.image.load(
-                    "../assets/items/unknown_mensaje.png"
+                    "/assets/items/unknown_mensaje.png"
                 ).convert_alpha()
             else:
                 self.final_screen_timer -= dt

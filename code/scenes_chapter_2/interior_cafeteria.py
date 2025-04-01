@@ -29,7 +29,7 @@ class InteriorCafeteriaScene(Scene):
         self.current_map = "interior_cafeteria"
 
         # Crear la nueva nota en la posición deseada
-        self.note = Note(544, 288, "../assets/items/nota2.png", 
+        self.note = Note(544, 288, "/assets/items/nota2.png", 
                          "Se que te Preocupas por mi, pero estoy bien.\n"
                          " Oye, ya basta. Me incomoda que me observes todo el tiempo", 
                          InteriorCafeteriaScene.note_taken_flag)

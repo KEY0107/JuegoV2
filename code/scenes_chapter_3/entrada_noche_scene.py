@@ -8,7 +8,7 @@ from death import death_screen
 
 
 class NPC(pygame.sprite.Sprite):
-    def __init__(self, x, y, image_path="../assets/characters/NPC_1.png"):
+    def __init__(self, x, y, image_path="/assets/characters/NPC_1.png"):
         super().__init__()
         self.image = pygame.image.load(image_path).convert_alpha()
         self.rect = self.image.get_rect(topleft=(x, y))
@@ -25,8 +25,8 @@ class EntradaNocheScene(Scene):
         self.current_map = "entrada_noche"
 
         # NPCs
-        self.npc1 = NPC(159, 789, "../assets/characters/NPC_1.png")
-        self.npc2 = NPC(1215, 461, "../assets/characters/NPC_2.png")
+        self.npc1 = NPC(159, 789, "/assets/characters/NPC_1.png")
+        self.npc2 = NPC(1215, 461, "/assets/characters/NPC_2.png")
         self.npc_group = pygame.sprite.Group(self.npc1, self.npc2)
 
         # Agregar colisiones

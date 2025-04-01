@@ -30,7 +30,7 @@ class SalonH2Scene(Scene):
         self.current_map = "salon_h2"
 
         # Crear la nueva nota en la posición (391, 206) con los mensajes proporcionados
-        self.note = Note(391, 206, "../assets/items/nota1.png", 
+        self.note = Note(391, 206, "/assets/items/nota1.png", 
                          "No debí venir hoy. Algo no está bien.\n"
                          "A veces siento que el aire se vuelve pesado, como si algo me estuviera aplastando.", 
                          globales_chapter_1.NOTA_SALON_TAKEN)

@@ -13,7 +13,7 @@ class HUD:
 
         # ✅ Añadir el objeto inicial: "tijeras"
         try:
-            tijeras_image = pygame.image.load("../assets/items/tijeras.png").convert_alpha()
+            tijeras_image = pygame.image.load("/assets/items/tijeras.png").convert_alpha()
             tijeras_image = pygame.transform.scale(tijeras_image, (50, 50))
             self.inventory.append(InventoryItem(tijeras_image, "tijeras"))  # ✅ le damos nombre
         except Exception as e:
