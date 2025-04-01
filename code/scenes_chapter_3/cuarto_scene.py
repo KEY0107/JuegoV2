@@ -35,7 +35,7 @@ class CuartoScene(Scene):
             pygame.display.flip()
             pygame.time.delay(1000)
 
-            susto_sound = pygame.mixer.Sound("/assets/sound/susto.mp3")
+            susto_sound = pygame.mixer.Sound("assets/sound/susto.mp3")
             susto_channel = susto_sound.play()
             pygame.time.delay(3000)
             susto_channel.stop()
@@ -44,7 +44,7 @@ class CuartoScene(Scene):
 
         # Si la nota fue tomada, activar diálogos extra y sonido de llanto
         if SalonH1Scene.note_taken_flag:
-            llanto_sound = pygame.mixer.Sound("/assets/sound/llanto.mp3")
+            llanto_sound = pygame.mixer.Sound("assets/sound/llanto.mp3")
             self.llanto_channel = llanto_sound.play(-1)  # Reproducir en bucle
             self.extra_dialogues = [
                 "Tengo que hacerlo... si lo hago ella descansará y todo volverá a la normalidad.",

@@ -40,7 +40,7 @@ class FinCapitulo2Scene(Scene):
         # Por ejemplo, importando y llamando a la función que inicia chapter 3.
         try:
             from chapter3 import run_chapter3  # Asegúrate de que este módulo y función existen
-            run_chapter3(self.screen)
+            run_chapter3(self.screen, self.player)
         except Exception as e:
             print("Error al transicionar a chapter 3:", e)
             pygame.quit()

@@ -19,7 +19,7 @@ class EntradaNocheScene(Scene):
         # Si no se pasa un jugador, creamos uno por defecto
         self.player = player if player is not None else Player(150, 900)
 
-        # Suponemos que los assets para entrada_noche están en "entrada_noche.png" y "entrada_noche_objetos.png"
+        # Suponemos que los assets para entrada_noche están en "entrada_noche.png" y "entrada_noche_obstaculos.png"
         self.map = Map("entrada_noche.png", "entrada_noche_obstaculos.png")
         self.obstacles = get_collisions("entrada")
         self.player_group = pygame.sprite.Group(self.player)
@@ -78,6 +78,16 @@ class EntradaNocheScene(Scene):
             self.player.update(dt, self.obstacles)
             self.player.clamp_within_map(self.map.fondo_rect)
 
+            # Si el jugador está atacando, se puede agregar lógica para interactuar
+            # por ejemplo, verificar colisiones con algún objeto o NPC (si fuera necesario)
+            if self.player.attacking:
+                attack_hitbox = self.player.get_attack_hitbox()
+                # Aquí podrías agregar colisiones con enemigos si los tuvieras en esta escena.
+                # Por ejemplo:
+                # for enemy in self.enemies:
+                #     if attack_hitbox.colliderect(enemy.rect):
+                #         enemy.take_damage(10)
+        
         keys = pygame.key.get_pressed()
         for npc in self.npcs:
             state = self.npc_states[npc]
@@ -149,6 +159,7 @@ class EntradaNocheScene(Scene):
         world_surface.fill((0, 0, 0))
         self.map.draw_fondo(world_surface, camera_offset)
 
+        # Dibuja al jugador
         world_surface.blit(
             self.player.image,
             (
@@ -157,6 +168,16 @@ class EntradaNocheScene(Scene):
             ),
         )
 
+        # Si el jugador está atacando, dibuja el hitbox de ataque con las scissors
+        if self.player.attacking:
+            attack_hitbox = self.player.get_attack_hitbox()
+            world_surface.blit(
+                self.player.scissors_image,
+                (attack_hitbox.x - camera_offset[0],
+                 attack_hitbox.y - camera_offset[1])
+            )
+
+        # Dibuja a los NPCs
         for npc in self.npcs:
             world_surface.blit(
                 npc.image,
@@ -176,17 +197,11 @@ class EntradaNocheScene(Scene):
             npc_screen_x = npc.rect.centerx - camera_offset[0]
             npc_screen_y = npc.rect.top - camera_offset[1]
 
-            if not state["conversation_active"] and self.player.rect.colliderect(
-                npc.rect
-            ):
+            if not state["conversation_active"] and self.player.rect.colliderect(npc.rect):
                 draw_prompt(self.screen, (npc_screen_x, npc_screen_y - 20))
 
-            if state["conversation_active"] and state["conversation_line_index"] < len(
-                state["conversation_lines"]
-            ):
-                speaker, text = state["conversation_lines"][
-                    state["conversation_line_index"]
-                ]
+            if state["conversation_active"] and state["conversation_line_index"] < len(state["conversation_lines"]):
+                speaker, text = state["conversation_lines"][state["conversation_line_index"]]
                 draw_dialogue(self.screen, speaker or npc.name, text)
 
         # Si hay un mensaje, dibujar el cuadro de diálogo en la parte inferior
@@ -196,23 +211,21 @@ class EntradaNocheScene(Scene):
     def show_message(self, message):
         # Mostrar un mensaje en pantalla durante un tiempo determinado
         self.message = message
-        self.message_timer = 2000  # Duración del mensaje en milisegundos (2 segundos)
+        self.message_timer = 2000  # Duración del mensaje en ms (2 segundos)
 
     def draw_dialogue_box(self, message):
         # Dibujar el cuadro de diálogo en la parte inferior
         font = pygame.font.Font(None, 40)
         text_surface = font.render(message, True, (255, 255, 255))
         
-        # Cuadro de diálogo en la parte inferior
         dialogue_rect = pygame.Rect(0, self.screen.get_height() - 100, self.screen.get_width(), 100)
-        pygame.draw.rect(self.screen, (0, 0, 0), dialogue_rect)  # Fondo del cuadro de diálogo
-        pygame.draw.rect(self.screen, (255, 255, 255), dialogue_rect, 3)  # Borde del cuadro de diálogo
+        pygame.draw.rect(self.screen, (0, 0, 0), dialogue_rect)  # Fondo
+        pygame.draw.rect(self.screen, (255, 255, 255), dialogue_rect, 3)  # Borde
         text_rect = text_surface.get_rect(center=dialogue_rect.center)
         
         self.screen.blit(text_surface, text_rect)
         pygame.display.flip()
 
-        # Reducir el tiempo de visualización del mensaje
-        self.message_timer -= 100  # Disminuir el tiempo restante
+        self.message_timer -= 100  # Reducir tiempo
         if self.message_timer <= 0:
             self.message = None

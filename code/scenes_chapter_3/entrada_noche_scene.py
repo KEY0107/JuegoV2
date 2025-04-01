@@ -8,7 +8,7 @@ from death import death_screen
 
 
 class NPC(pygame.sprite.Sprite):
-    def __init__(self, x, y, image_path="/assets/characters/NPC_1.png"):
+    def __init__(self, x, y, image_path="assets/characters/NPC_1.png"):
         super().__init__()
         self.image = pygame.image.load(image_path).convert_alpha()
         self.rect = self.image.get_rect(topleft=(x, y))
@@ -25,8 +25,8 @@ class EntradaNocheScene(Scene):
         self.current_map = "entrada_noche"
 
         # NPCs
-        self.npc1 = NPC(159, 789, "/assets/characters/NPC_1.png")
-        self.npc2 = NPC(1215, 461, "/assets/characters/NPC_2.png")
+        self.npc1 = NPC(159, 789, "assets/characters/NPC_1.png")
+        self.npc2 = NPC(1215, 461, "assets/characters/NPC_2.png")
         self.npc_group = pygame.sprite.Group(self.npc1, self.npc2)
 
         # Agregar colisiones
@@ -66,6 +66,12 @@ class EntradaNocheScene(Scene):
                     if self.player.health <= 0:
                         if death_screen(self.screen):
                             return "restart"
+                        
+        if self.player.attacking:
+            attack_hitbox = self.player.get_attack_hitbox()
+            for monster in self.monsters:
+                if attack_hitbox.colliderect(monster.rect):
+                    monster.take_damage(10)  # Aplica 10 puntos de daño al monstruo
 
         # Transiciones
         door_entrada_to_calle = pygame.Rect(0, 960, 300, 10)
@@ -107,6 +113,15 @@ class EntradaNocheScene(Scene):
 
         for sprite in self.player_group:
             world_surface.blit(sprite.image, (sprite.rect.x - camera_offset[0], sprite.rect.y - camera_offset[1]))
+
+                # (Opcional) Dibuja el hitbox de ataque en modo depuración
+        if self.player.attacking:
+            attack_hitbox = self.player.get_attack_hitbox()
+            world_surface.blit(
+                self.player.scissors_image,
+                (attack_hitbox.x - camera_offset[0],
+                attack_hitbox.y - camera_offset[1])
+            )
 
         for npc in self.npc_group:
             world_surface.blit(npc.image, (npc.rect.x - camera_offset[0], npc.rect.y - camera_offset[1]))

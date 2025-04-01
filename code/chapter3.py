@@ -27,13 +27,15 @@ from hud import HUD
 
 
 
-def run_chapter3(screen):
+def run_chapter3(screen, player=None):
 
     Cinematica.play(screen)  # o Cinematica.reproducir(screen) según como lo nombraste
 
     clock = pygame.time.Clock()
-    current_scene = CuartoScene(screen, show_initial_dialogue=True)
-    hud = HUD(current_scene.player)  # Inicializa el HUD con el jugador actual
+    current_scene = CuartoScene(screen, show_initial_dialogue=True, player=player)
+    if current_scene.player:
+        current_scene.player.health = current_scene.player.max_health  # Reinicia la salud
+    hud = HUD(current_scene.player)
 
     running = True
     while running:

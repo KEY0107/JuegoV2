@@ -35,14 +35,14 @@ class SalonH1Scene(Scene):
         self.DEFAULT_ZOOM = 2
         self.current_map = "salon_h1"
 
-        self.npc1 = NPC(431, 338, "/assets/characters/NPC_12.png", "Compañero", "¿Estás bien?")
-        self.npc2 = NPC(491, 206, "/assets/characters/NPC_8.png", "Compañera", "Deberías ir a casa Alex, te miras mal.")
+        self.npc1 = NPC(431, 338, "assets/characters/NPC_12.png", "Compañero", "¿Estás bien?")
+        self.npc2 = NPC(491, 206, "assets/characters/NPC_8.png", "Compañera", "Deberías ir a casa Alex, te miras mal.")
         self.npc_group = pygame.sprite.Group(self.npc1, self.npc2)
 
         self.obstacles.append(self.npc1.rect)
         self.obstacles.append(self.npc2.rect)
 
-        self.note = Note(124, 220, "/assets/items/nota1.png", "Es un tonto, aún no se da cuenta.")
+        self.note = Note(124, 220, "assets/items/nota1.png", "Es un tonto, aún no se da cuenta.")
         self.note_visible = True
         self.note_active = False
         self.note_taken = False

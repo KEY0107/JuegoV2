@@ -35,7 +35,7 @@ class BanioIzquierdoHScene(Scene):
         else:
             self.show_black_screen = False
 
-    def play_cinematic(self, screen, video_path="/assets/fondos/cinematicaBanoCap3.mp4"):
+    def play_cinematic(self, screen, video_path="assets/fondos/cinematicaBanoCap3.mp4"):
         cap = cv2.VideoCapture(video_path)
 
         if not cap.isOpened():

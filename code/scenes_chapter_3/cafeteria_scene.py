@@ -48,6 +48,12 @@ class CafeteriaScene(Scene):
                     if self.player.health <= 0:
                         if death_screen(self.screen):  # Si el jugador presiona R
                             return "restart"
+                        
+        if self.player.attacking:
+            attack_hitbox = self.player.get_attack_hitbox()
+            for monster in self.monsters:
+                if attack_hitbox.colliderect(monster.rect):
+                    monster.take_damage(10)  # Aplica 10 puntos de daño al monstruo
 
 
         # Si el jugador muere, mostrar pantalla de muerte
@@ -83,6 +89,16 @@ class CafeteriaScene(Scene):
 
         for sprite in self.player_group:
             world_surface.blit(sprite.image, (sprite.rect.x - camera_offset[0], sprite.rect.y - camera_offset[1]))
+        
+        # (Opcional) Dibuja el hitbox de ataque en modo depuración
+        if self.player.attacking:
+            attack_hitbox = self.player.get_attack_hitbox()
+            world_surface.blit(
+                self.player.scissors_image,
+                (attack_hitbox.x - camera_offset[0],
+                attack_hitbox.y - camera_offset[1])
+            )
+
 
         for monster in self.monsters:
             monster.draw(world_surface, camera_offset)

@@ -7,7 +7,7 @@ import globales_chapter_1
 
 
 class Fantasma(pygame.sprite.Sprite):
-    def __init__(self, positions, image_path="/assets/characters/fantasma_frente.png"):
+    def __init__(self, positions, image_path="assets/characters/fantasma_frente.png"):
         super().__init__()
         self.image = pygame.image.load(image_path).convert_alpha()
         self.positions = positions

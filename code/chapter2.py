@@ -73,7 +73,7 @@ def run_chapter2(screen):
             if next_scene == "sala":
                 current_scene = SalaScene(screen, current_scene.player)
             elif next_scene == "cuarto":
-                current_scene = FinCapitulo2Scene(screen)  # Cambiar aquí por la nueva clase
+                current_scene = FinCapitulo2Scene(screen, current_scene.player)  # Cambiar aquí por la nueva clase
             elif next_scene == "banio":
                 current_scene = BanioScene(screen, current_scene.player)
             elif next_scene == "calle":
